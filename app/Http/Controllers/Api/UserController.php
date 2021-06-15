@@ -29,7 +29,7 @@ class UserController extends Controller
         $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['name'] =  $user->name;
 
-        return response()->json(['success'=>$success], $this->successStatus);
+        return response()->json(['success'=>$success], 200);
     }
 
     public function login(){
