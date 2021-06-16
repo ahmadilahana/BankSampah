@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class FtProfile extends Migration
+class FtProfileTable extends Migration
 {
     /**
      * Run the migrations.
