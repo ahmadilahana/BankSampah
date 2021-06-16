@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class Nasabah extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
+
+    protected $table = "nasabah";
 
     /**
      * The attributes that are mass assignable.
