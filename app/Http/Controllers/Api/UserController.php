@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Nasabah;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:nasabah',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
@@ -25,7 +25,7 @@ class UserController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+        $user = Nasabah::create($input);
         $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['user'] =  $user;
 
