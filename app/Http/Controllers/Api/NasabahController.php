@@ -8,8 +8,18 @@ use App\Models\Nasabah;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class UserController extends Controller
+class NasabahController extends Controller
 {
+    public function __contruct(Type $var = null)
+    {
+        $this->middleware('auth:api', [
+            'except' => [
+                'login',
+                'logout'
+            ]
+        ]);
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -33,7 +43,7 @@ class UserController extends Controller
     }
 
     public function login(){
-        if(Auth::guards('api')->attempt(['email' => request('email'), 'password' => request('password')])){
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
             $success['token'] =  $user->createToken('nApp')->accessToken;
             return response()->json(['success' => $success], 200);
