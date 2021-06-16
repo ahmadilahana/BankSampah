@@ -32,6 +32,6 @@ class NasabahTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nasabah');
+        //
     }
 }
