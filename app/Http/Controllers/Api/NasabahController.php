@@ -22,7 +22,7 @@ class NasabahController extends Controller
         $data = $request->only('name', 'email', 'password');
         $validator = Validator::make($data, [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:nasabah',
             'password' => 'required|string|min:6|max:50'
         ]);
 
@@ -63,6 +63,7 @@ class NasabahController extends Controller
 
         //Request is validated
         //Crean token
+        $token = JWTAuth::attempt($credentials);
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
