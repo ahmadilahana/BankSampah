@@ -65,7 +65,7 @@ class NasabahController extends Controller
         //Crean token
         $token = JWTAuth::attempt($credentials);
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (! $token) {
                 return response()->json([
                 	'success' => false,
                 	'message' => 'Login credentials are invalid.',
