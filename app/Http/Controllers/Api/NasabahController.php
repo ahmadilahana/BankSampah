@@ -23,7 +23,8 @@ class NasabahController extends Controller
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email|unique:nasabah',
-            'password' => 'required|string|min:6|max:50'
+            'password' => 'required|string|min:6|max:50',
+            'c_password' => 'required|string|same:password'
         ]);
 
         //Send failed response if request is not valid
@@ -32,18 +33,19 @@ class NasabahController extends Controller
         }
 
         //Request is valid, create new user
-        $user = User::create([
+        $user = Nasabah::create([
         	'name' => $request->name,
         	'email' => $request->email,
         	'password' => bcrypt($request->password)
         ]);
-
+        $token = JWTAuth::fromUser($user);
         //User created, return success response
         return response()->json([
             'success' => true,
             'message' => 'User created successfully',
-            'data' => $user
-        ], Response::HTTP_OK);
+            'data' => $user,
+            'token' => $token
+        ], 200);
     }
  
     public function login(Request $request)
