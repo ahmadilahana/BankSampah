@@ -18,7 +18,6 @@ Route::post('register', 'Api\NasabahController@register');
 
 Route::group([
 	'middleware' => 'jwt.verify',
-	'namespace' => 'Api'
 ], function(){
-	Route::get('user', 'NasabahController@get_user');
+	Route::get('user', 'Api\NasabahController@get_user');
 });
