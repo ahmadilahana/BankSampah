@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'Api\NasabahController@login');
 Route::post('register', 'Api\NasabahController@register');
 
-Route::group(['middleware' => 'auth:api'], function(){
-	Route::post('details', 'Api\UserController@details');
+Route::group([
+	'middleware' => 'auth:api',
+	'namespace' => 'Api'
+], function(){
+	Route::get('user', 'NasabahController@get_user');
 });
