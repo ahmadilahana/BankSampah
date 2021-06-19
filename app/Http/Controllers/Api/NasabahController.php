@@ -19,7 +19,7 @@ class NasabahController extends Controller
     public function register(Request $request)
     {
     	//Validate data
-        $data = $request->only('name', 'email', 'password');
+        $data = $request->only('name', 'email', 'password', 'c_password');
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email|unique:nasabah',
