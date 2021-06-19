@@ -43,7 +43,7 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'nasabah',
+            'provider' => 'users',
             'hash' => false,
         ],
     ],
@@ -66,7 +66,7 @@ return [
     */
 
     'providers' => [
-        'nasabah' => [
+        'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\Nasabah::class,
         ],

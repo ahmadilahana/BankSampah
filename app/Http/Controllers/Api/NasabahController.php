@@ -11,6 +11,11 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class NasabahController extends Controller
 {
+    public function __contruct()
+    {
+        Config::set('jwt.user', 'App\Models\Admin'); 
+        Config::set('auth.providers.users.model', \App\Models\Admin::class);
+    }
     public function register(Request $request)
     {
     	//Validate data
@@ -48,7 +53,7 @@ class NasabahController extends Controller
         //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
-            'password' => 'required|string|min:6|max:50'
+            'password' => 'required|string'
         ]);
 
         //Send failed response if request is not valid
