@@ -13,11 +13,28 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', 'Api\NasabahController@login');
-Route::post('register', 'Api\NasabahController@register');
 
 Route::group([
-	'middleware' => 'jwt.verify',
+	'namespace' => 'Api'
 ], function(){
-	Route::get('user', 'Api\NasabahController@get_user');
+
+	Route::group([
+		'prefix' => 'User'
+	], function(){
+		Route::post('login', 'NasabahController@login');
+		Route::post('register', 'NasabahController@register');
+	});
+
+	Route::group([
+		'prefix' => 'Admin'
+	], function(){
+		Route::post('login', 'AdminController@login');
+		// Route::post('register', 'AdminController@register');
+	});
+
+	Route::group([
+		'middleware' => 'jwt.verify',
+	], function(){
+		Route::get('user', 'NasabahController@get_user');
+	});
 });
