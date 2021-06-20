@@ -50,6 +50,8 @@ class NasabahController extends Controller
  
     public function login(Request $request)
     {
+        Config::set('jwt.user', 'App\Models\Nasabah'); 
+        Config::set('auth.providers.users.model', \App\Models\Nasabah::class);
         $credentials = $request->only('email', 'password');
 
         //valid credential

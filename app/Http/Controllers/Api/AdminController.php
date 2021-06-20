@@ -19,6 +19,9 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
+        Config::set('jwt.user', 'App\Models\Admin'); 
+        Config::set('auth.providers.users.model', \App\Models\Admin::class);
+        
         $credentials = $request->only('email', 'password');
 
         //valid credential
