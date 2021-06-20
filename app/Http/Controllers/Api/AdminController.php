@@ -20,6 +20,7 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
+        echo "admin login";
         Config::set('jwt.user', 'App\Models\Admin'); 
         Config::set('auth.providers.users.model', \App\Models\Admin::class);
 
