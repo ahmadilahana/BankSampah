@@ -8,6 +8,7 @@ use App\Models\Nasabah;
 use Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Config;
 
 class AdminController extends Controller
 {
@@ -21,7 +22,7 @@ class AdminController extends Controller
     {
         Config::set('jwt.user', 'App\Models\Admin'); 
         Config::set('auth.providers.users.model', \App\Models\Admin::class);
-        
+
         $credentials = $request->only('email', 'password');
 
         //valid credential
