@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Nasabah;
 
-class Admin_data extends Seeder
+class Nasabah_data extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +14,9 @@ class Admin_data extends Seeder
      */
     public function run()
     {
-        Admin::create([
-            'name' => 'Admin',
-            'email' => 'admin@email.com',
+        Nasabah::create([
+            'name' => 'ilahana',
+            'email' => 'ilahana@email.com',
             'password' => bcrypt('123123'),
         ]);
     }
