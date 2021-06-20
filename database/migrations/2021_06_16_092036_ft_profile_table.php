@@ -16,8 +16,8 @@ class FtProfileTable extends Migration
         Schema::create('ft_profile', function (Blueprint $table) {
             $table->string('id')->unique();
             $table->string('foto')->unique();
-            $table->unsignedBigInteger('nasabah_id');
-            $table->foreign('nasabah_id')->references('id')->on('nasabah');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

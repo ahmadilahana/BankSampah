@@ -5,25 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
-use App\Models\Nasabah;
+use App\Models\User;
 use Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Hash;
 
 class NasabahController extends Controller
 {
-    public function __contruct()
-    {
-        Config::set('jwt.user', 'App\Models\Nasabah'); 
-        Config::set('auth.providers.users.model', \App\Models\Nasabah::class);
-    }
+    protected $token;
+
     public function register(Request $request)
     {
     	//Validate data
-        $data = $request->only('name', 'email', 'password', 'c_password');
+        $data = $request->only('name', 'email', 'no_telp', 'password', 'c_password');
         $validator = Validator::make($data, [
             'name' => 'required|string',
-            'email' => 'required|email|unique:nasabah',
+            'email' => 'required|email|unique:users',
+            'no_telp' => 'required|numeric|unique:users',
             'password' => 'required|string|min:6|max:50',
             'c_password' => 'required|string|same:password'
         ]);
@@ -34,9 +33,11 @@ class NasabahController extends Controller
         }
 
         //Request is valid, create new user
-        $user = Nasabah::create([
+        $user = User::create([
         	'name' => $request->name,
         	'email' => $request->email,
+        	'no_telp' => $request->no_telp,
+        	'role' => "Nasabah",
         	'password' => bcrypt($request->password)
         ]);
         $token = JWTAuth::fromUser($user);
@@ -49,98 +50,4 @@ class NasabahController extends Controller
         ], 200);
     }
  
-    public function login(Request $request)
-    {
-        Config::set('jwt.user', 'App\Models\Nasabah'); 
-        Config::set('auth.providers.users.model', \App\Models\Nasabah::class);
-        $credentials = $request->only('email', 'password');
-
-        //valid credential
-        $validator = Validator::make($credentials, [
-            'email' => 'required|email',
-            'password' => 'required|string'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
-        }
-
-        //Request is validated
-        //Crean token
-        $token = JWTAuth::attempt($credentials);
-        try {
-            if (! $token) {
-                return response()->json([
-                	'success' => false,
-                	'message' => 'Login credentials are invalid.',
-                ], 400);
-            }
-        } catch (JWTException $e) {
-    	return $credentials;
-            return response()->json([
-                	'success' => false,
-                	'message' => 'Could not create token.',
-                ], 500);
-        }
- 	
- 		//Token created, return with success response and jwt token
-        return response()->json([
-            'success' => true,
-            'token' => $token,
-        ]);
-    }
- 
-    public function logout(Request $request)
-    {
-        //valid credential
-        $validator = Validator::make($request->only('token'), [
-            'token' => 'required'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
-        }
-
-		//Request is validated, do logout        
-        try {
-            JWTAuth::invalidate($request->token);
- 
-            return response()->json([
-                'success' => true,
-                'message' => 'User has been logged out'
-            ]);
-        } catch (JWTException $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, user cannot be logged out'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
- 
-    public function get_user(Request $request)
-    {
-        try {
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-
-        return response()->json(compact('user'));
-    }
 }

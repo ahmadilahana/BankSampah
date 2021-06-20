@@ -8,11 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Nasabah extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
-    protected $table = "nasabah";
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +22,7 @@ class Nasabah extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -52,4 +52,5 @@ class Nasabah extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
 }

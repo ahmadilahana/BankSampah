@@ -18,23 +18,14 @@ Route::group([
 	'namespace' => 'Api'
 ], function(){
 
-	Route::group([
-		'prefix' => 'User'
-	], function(){
-		Route::post('login', 'NasabahController@login');
+		Route::post('login', 'UserController@login');
 		Route::post('register', 'NasabahController@register');
-	});
 
 	Route::group([
-		'prefix' => 'Admin'
+		'middleware' => ['jwt.verify', "role:Admin,Nasabah,Pengurus1,Pengurus2,Bendahara"],
 	], function(){
-		Route::post('login', 'AdminController@login');
-		// Route::post('register', 'AdminController@register');
+		Route::get('user', 'UserController@get_user');
+		Route::post('user/edit', 'UserController@edit_user');
 	});
-
-	Route::group([
-		'middleware' => 'jwt.verify',
-	], function(){
-		Route::get('user', 'NasabahController@get_user');
-	});
+	
 });
