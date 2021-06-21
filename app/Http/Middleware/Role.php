@@ -23,6 +23,7 @@ class Role extends Middleware
         if(Auth::check()){
 
             if (count($roles) > 1) {
+                // echo $user['role'];
                 foreach ($roles as $key => $role) {
                     if ($user['role']==$role) {
                         return $next($request);

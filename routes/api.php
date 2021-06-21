@@ -32,11 +32,11 @@ Route::group([
 	});
 
 	Route::group([
-		'midlleware' => ['jwt.verify', 'role:admin'],
+		'middleware' => ['jwt.verify', "role:Admin"],
 
 	],function(){
 		Route::post('user/add', 'UserController@add_user');
-		Route::post('user/edit/byadmin', 'UserController@edit_user_byadmin');
+		Route::post('user/edit/{id}/byadmin', 'UserController@edit_user_byadmin');
 	});
 	
 });

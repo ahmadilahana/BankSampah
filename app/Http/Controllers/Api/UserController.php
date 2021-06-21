@@ -156,7 +156,7 @@ class UserController extends Controller
             return response()->json('password invalid', 400);
         }else {
             User::find($user->id)->update([
-                'password' => $request['new_password'],
+                'password' => Hash::make($request['new_password']),
             ]);
             return response()->json('change password success', 200);
         }
@@ -195,10 +195,10 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function edit_user_byadmin(Request $request)
+    public function edit_user_byadmin(Request $request, $id)
     {
         $data = $request->only('name', 'email', 'no_telp');
-        $user = Auth::user();
+        $user = User::find($id);
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email',
@@ -246,7 +246,7 @@ class UserController extends Controller
             return response()->json(['error' => $validator->messages()], 200);
         }
         
-        User::find($user->id)->update([
+        $user->update([
             'name' => $request->name,
             'email' => $email,
             'no_telp' => $no_telp,
