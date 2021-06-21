@@ -20,6 +20,12 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    @if (Request::is('user/*'))
+
+        <!-- Custom styles for this page -->
+        <link href="{{ asset('/tools/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    @endif
+
 </head>
 
 <body id="page-top">
@@ -78,9 +84,17 @@
     <!-- Page level plugins -->
     <script src="{{ asset('/tools/chart.js/Chart.min.js') }}"></script>
 
+    <script src="{{ asset('/tools/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/tools/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
     <!-- Page level custom scripts -->
+    <script src="{{ asset('/js/demo/datatables-demo.js') }}Z"></script>
     <script src="{{ asset('/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('/js/demo/chart-pie-demo.js') }}"></script>
+
+    <script>
+            $('#dataTable').DataTable();
+    </script>
 
 </body>
 
