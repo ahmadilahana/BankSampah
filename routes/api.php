@@ -18,25 +18,33 @@ Route::group([
 	'namespace' => 'Api'
 ], function(){
 
-		Route::post('login', 'UserController@login');
-		Route::post('register', 'NasabahController@register');
-		Route::post('user/forgot_password', 'ForgotPasswordController@postEmail');
+		Route::post('/login', 'UserController@login');
+		Route::post('/register', 'NasabahController@register');
+		Route::post('/user/forgot_password', 'ForgotPasswordController@postEmail');
 
 	Route::group([
 		'middleware' => ['jwt.verify', "role:Admin,Nasabah,Pengurus1,Pengurus2,Bendahara"],
 	], function(){
-		Route::get('user', 'UserController@get_user');
-		Route::post('user/edit', 'UserController@edit_user');
+		Route::get('/user', 'UserController@get_user');
+		Route::post('/user/edit', 'UserController@edit_user');
 
-		Route::post('user/reset_password', 'UserController@reset_password');
+		Route::post('/user/reset_password', 'UserController@reset_password');
 	});
 
 	Route::group([
 		'middleware' => ['jwt.verify', "role:Admin"],
 
 	],function(){
-		Route::post('user/add', 'UserController@add_user');
-		Route::post('user/edit/{id}/byadmin', 'UserController@edit_user_byadmin');
+		Route::post('/user/add', 'UserController@add_user');
+		Route::post('/user/edit/{id}/byadmin', 'UserController@edit_user_byadmin');
 	});
+
+
+	Route::group([
+		'middleware' => ['jwt.verify', 'role:Pengurus1'],
+	], function(){
+		Route::get('/jenis_sampah', 'Pengurus1Controller@get_jenis_sampah');
+	});
+
 	
 });

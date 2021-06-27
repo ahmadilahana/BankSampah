@@ -10,75 +10,77 @@
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
+        @if (Session::has('success'))
 
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{Session::get('success')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @php
+                Session::forget('success');
+            @endphp
+        @endif
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <div class="d-flex card-header py-3">
+                <h6 class="flex-grow-1 font-weight-bold text-primary">Data Table</h6>
+                <a href="/user/nasabah/add" class="btn btn-primary btn-icon-split btn-sm">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Tambah Data</span>
+                </a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No. Telepon</th>
+                                <th>Role</th>
+                                <th>Lokasi</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No. Telepon</th>
+                                <th>Role</th>
+                                <th>Lokasi</th>
+                                <th>Actiion</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                                <td>22</td>
-                                <td>2012/03/29</td>
-                                <td>$433,060</td>
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>33</td>
-                                <td>2008/11/28</td>
-                                <td>$162,700</td>
-                            </tr>
+                            @foreach ($users as $user)
+
+                                <tr>
+                                    <td>{{ $user['name'] }}</td>
+                                    <td>{{ $user['email'] }}</td>
+                                    <td>{{ $user['no_telp'] }}</td>
+                                    <td>{{ $user['role'] }}</td>
+                                    <td>{{ $user['lokasi'] }}</td>
+                                    <td>
+                                        <a href="/user/nasabah/edit/{{$user['id']}}" class="btn btn-primary btn-icon-split btn-sm">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                            <span class="text">Edit</span>
+                                        </a>
+                                        <a href="/user/nasabah/delete/{{$user['id']}}" class="btn btn-danger btn-icon-split btn-sm">
+                                            <span class="icon text-white-50">
+                                                <i class="far fa-trash-alt"></i>
+                                            </span>
+                                            <span class="text">Hapus</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

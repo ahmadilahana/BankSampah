@@ -6,11 +6,10 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <h1 class="h3 mb-0 text-gray-800">Pengurus 2</h1>
+              <h1 class="h3 mb-0 text-gray-800">Jenis Pembayaran</h1>
               <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                       class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
-
           @if (Session::has('success'))
 
               <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -23,10 +22,11 @@
                   Session::forget('success');
               @endphp
           @endif
+
           <div class="card shadow mb-4">
               <div class="d-flex card-header py-3">
                   <h6 class="flex-grow-1 font-weight-bold text-primary">Data Table</h6>
-                  <a href="/user/pengurus2/add" class="btn btn-primary btn-icon-split btn-sm">
+                  <a href="/jenis_sampah/add" class="btn btn-primary btn-icon-split btn-sm">
                       <span class="icon text-white-50">
                           <i class="fas fa-plus"></i>
                       </span>
@@ -38,42 +38,33 @@
                       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                           <thead>
                               <tr>
-                                  <th>Nama</th>
-                                  <th>Email</th>
-                                  <th>No. Telepon</th>
-                                  <th>Role</th>
-                                  <th>Lokasi</th>
+                                  <th>Jenis</th>
+                                  <th>Harga</th>
                                   <th>Action</th>
                               </tr>
                           </thead>
                           <tfoot>
                               <tr>
-                                  <th>Nama</th>
-                                  <th>Email</th>
-                                  <th>No. Telepon</th>
-                                  <th>Role</th>
-                                  <th>Lokasi</th>
-                                  <th>Actiion</th>
+                                  <th>Jenis</th>
+                                  <th>Harga</th>
+                                  <th>Action</th>
                               </tr>
                           </tfoot>
                           <tbody>
-                              @foreach ($users as $user)
+                              @foreach ($sampah as $item)
 
                                   <tr>
-                                      <td>{{ $user['name'] }}</td>
-                                      <td>{{ $user['email'] }}</td>
-                                      <td>{{ $user['no_telp'] }}</td>
-                                      <td>{{ $user['role'] }}</td>
-                                      <td>{{ $user['lokasi'] }}</td>
+                                      <td>{{ $item['jenis'] }}</td>
+                                      <td>{{ $item['harga'] }}</td>
                                       <td>
-                                          <a href="/user/pengurus2/edit/{{ $user['id'] }}"
+                                          <a href="/jenis_sampah/edit/{{ $item['id'] }}"
                                               class="btn btn-primary btn-icon-split btn-sm">
                                               <span class="icon text-white-50">
                                                   <i class="fas fa-edit"></i>
                                               </span>
                                               <span class="text">Edit</span>
                                           </a>
-                                          <a href="/user/pengurus2/delete/{{ $user['id'] }}"
+                                          <a href="/jenis_sampah/delete/{{ $item['id'] }}"
                                               class="btn btn-danger btn-icon-split btn-sm">
                                               <span class="icon text-white-50">
                                                   <i class="far fa-trash-alt"></i>

@@ -20,11 +20,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    @if (Request::is('user/*'))
-
         <!-- Custom styles for this page -->
         <link href="{{ asset('/tools/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    @endif
 
 </head>
 
