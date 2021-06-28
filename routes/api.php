@@ -32,6 +32,12 @@ Route::group([
 	});
 
 	Route::group([
+		'middleware' => ['jwt.verify', "role:Admin,Pengurus1,Pengurus2,Bendahara"],
+	], function(){
+		Route::get('/nasabah', 'NasabahController@get_all');
+	});
+
+	Route::group([
 		'middleware' => ['jwt.verify', "role:Admin"],
 
 	],function(){
@@ -43,7 +49,8 @@ Route::group([
 	Route::group([
 		'middleware' => ['jwt.verify', 'role:Pengurus1'],
 	], function(){
-		Route::get('/jenis_sampah', 'Pengurus1Controller@get_jenis_sampah');
+		Route::get('/jenis_sampah', 'JenisSampahController@get_jenis_sampah');
+		Route::post('/setoran/add', 'SetoranController@add');
 	});
 
 	

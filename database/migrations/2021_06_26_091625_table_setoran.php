@@ -20,7 +20,9 @@ class TableSetoran extends Migration
             $table->unsignedBigInteger('jenis_id');
             $table->float('berat');
             $table->float('debit');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('jenis_id')->references('id')->on('jenis_sampah');
+            $table->foreign('user_id')->references('id')->on('users');
         });
 
     }

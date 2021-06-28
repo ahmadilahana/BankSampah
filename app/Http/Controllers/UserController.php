@@ -38,13 +38,14 @@ class UserController extends Controller
 
         }
 
-        if (Auth::user()->role != "Admin") {
+        if (Auth::user()->role == "Admin" || Auth::user()->role == "Bendahara") {
+            return redirect('/');
+        }else {
             Auth::logout();
             return redirect()->back()->with("error", "Your account doesn't have Login Access")->withInput($request->all());
         }
  	
  		//Token created, return with success response and jwt token
-        return redirect('/');
     }
 
     public function logout()

@@ -32,29 +32,32 @@
         </a>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item {{ Request::is('user/pengurus1') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="/user/pengurus1">
-            <i class="fas fa-user-friends"></i>
-            <span>Pengurus 1</span>
-        </a>
-    </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item {{ Request::is('user/pengurus2') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="/user/pengurus2">
-            <i class="fas fa-user-friends"></i>
-            <span>Pengurus 2</span>
-        </a>
-    </li>
+    @if (Auth::user()->role == 'Admin')
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item {{ Request::is('user/pengurus1') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="/user/pengurus1">
+                <i class="fas fa-user-friends"></i>
+                <span>Pengurus 1</span>
+            </a>
+        </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item {{ Request::is('user/bendahara') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="/user/bendahara">
-            <i class="fas fa-user-friends"></i>
-            <span>Bendahara</span>
-        </a>
-    </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item {{ Request::is('user/pengurus2') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="/user/pengurus2">
+                <i class="fas fa-user-friends"></i>
+                <span>Pengurus 2</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item {{ Request::is('user/bendahara') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="/user/bendahara">
+                <i class="fas fa-user-friends"></i>
+                <span>Bendahara</span>
+            </a>
+        </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -63,14 +66,29 @@
     <div class="sidebar-heading">
         Data
     </div>
+    @if (Auth::user()->role == 'Admin')
 
-    <li class="nav-item {{ Request::is('jenis_sampah') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="/jenis_sampah">
-            <i class="fas fa-user-friends"></i>
-            <span>Jenis Sampah</span>
+        <li class="nav-item {{ Request::is('jenis_sampah') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="/jenis_sampah">
+                <i class="fas fa-database"></i>
+                <span>Jenis Sampah</span>
+            </a>
+        </li>
+    @endif
+
+    <li class="nav-item {{ Request::is('setoran') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="/setoran">
+            <i class="fas fa-database"></i>
+            <span>Riwayat Setoran</span>
         </a>
     </li>
-
+    
+    <li class="nav-item {{ Request::is('bukutabungan') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="/bukutabungan">
+            <i class="fas fa-database"></i>
+            <span>Riwayat Setoran</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

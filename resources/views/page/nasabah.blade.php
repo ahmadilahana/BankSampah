@@ -13,7 +13,7 @@
         @if (Session::has('success'))
 
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{Session::get('success')}}
+                <strong>Success!</strong> {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -25,12 +25,15 @@
         <div class="card shadow mb-4">
             <div class="d-flex card-header py-3">
                 <h6 class="flex-grow-1 font-weight-bold text-primary">Data Table</h6>
-                <a href="/user/nasabah/add" class="btn btn-primary btn-icon-split btn-sm">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-plus"></i>
-                    </span>
-                    <span class="text">Tambah Data</span>
-                </a>
+                @if (Auth::user()->role == 'Admin')
+
+                    <a href="/user/nasabah/add" class="btn btn-primary btn-icon-split btn-sm">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Tambah Data</span>
+                    </a>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -42,7 +45,10 @@
                                 <th>No. Telepon</th>
                                 <th>Role</th>
                                 <th>Lokasi</th>
-                                <th>Action</th>
+                                @if (Auth::user()->role == 'Admin')
+
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tfoot>
@@ -52,7 +58,10 @@
                                 <th>No. Telepon</th>
                                 <th>Role</th>
                                 <th>Lokasi</th>
-                                <th>Actiion</th>
+                                @if (Auth::user()->role == 'Admin')
+
+                                    <th>Actiion</th>
+                                @endif
                             </tr>
                         </tfoot>
                         <tbody>
@@ -64,20 +73,25 @@
                                     <td>{{ $user['no_telp'] }}</td>
                                     <td>{{ $user['role'] }}</td>
                                     <td>{{ $user['lokasi'] }}</td>
-                                    <td>
-                                        <a href="/user/nasabah/edit/{{$user['id']}}" class="btn btn-primary btn-icon-split btn-sm">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-edit"></i>
-                                            </span>
-                                            <span class="text">Edit</span>
-                                        </a>
-                                        <a href="/user/nasabah/delete/{{$user['id']}}" class="btn btn-danger btn-icon-split btn-sm">
-                                            <span class="icon text-white-50">
-                                                <i class="far fa-trash-alt"></i>
-                                            </span>
-                                            <span class="text">Hapus</span>
-                                        </a>
-                                    </td>
+                                    @if (Auth::user()->role == 'Admin')
+
+                                        <td>
+                                            <a href="/user/nasabah/edit/{{ $user['id'] }}"
+                                                class="btn btn-primary btn-icon-split btn-sm">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+                                                <span class="text">Edit</span>
+                                            </a>
+                                            <a href="/user/nasabah/delete/{{ $user['id'] }}"
+                                                class="btn btn-danger btn-icon-split btn-sm">
+                                                <span class="icon text-white-50">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </span>
+                                                <span class="text">Hapus</span>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
 
                             @endforeach

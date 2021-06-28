@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             data_user::class,
+            data_jenis_sampah::class,
         ]);
     }
 }

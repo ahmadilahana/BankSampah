@@ -54,4 +54,9 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function setoran()
+    {
+        return $this->hasMany(Setoran::class, 'user_id', 'id');
+    }
+
 }

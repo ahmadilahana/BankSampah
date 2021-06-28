@@ -50,4 +50,9 @@ class NasabahController extends Controller
         ], 200);
     }
  
+    public function get_all()
+    {
+        $user = User::where('role', 'Nasabah')->get();
+        return response()->json($user, 200);
+    }
 }

@@ -24,6 +24,10 @@ Route::group([
     Route::get('/', function () {
         return view('page.home');
     });
+    Route::get('/profile', function () {
+        return view('page.profile');
+    });
+    
     //Nasabah
     Route::get('/user/nasabah', "NasabahController@get_user");
     Route::get('/user/nasabah/add', function () {
@@ -77,5 +81,8 @@ Route::group([
     Route::get('/jenis_sampah/delete/{id}', "JenisSampahController@delete_data");
     Route::get('/jenis_sampah/edit/{id}', "JenisSampahController@edit_data");
     Route::post('/jenis_sampah/edit/{id}', "JenisSampahController@update_data");
+    //END JENIS SAMPAH
 
+    //SETORAN
+    Route::get('/setoran', 'SetoranController@get_data');
 });

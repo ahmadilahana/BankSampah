@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JenisSampah;
 use Illuminate\Http\Request;
 
-class Pengurus1Controller extends Controller
+class JenisSampahController extends Controller
 {
     public function get_jenis_sampah()
     {
