@@ -45,6 +45,13 @@ Route::group([
 		Route::post('/user/edit/{id}/byadmin', 'UserController@edit_user_byadmin');
 	});
 
+	Route::group([
+		'middleware' => ['jwt.verify', "role:Nasabah"],
+
+	],function(){
+		Route::get('/bukutabungan', 'NasabahController@buku_tabungan');
+	});
+
 
 	Route::group([
 		'middleware' => ['jwt.verify', 'role:Pengurus1'],

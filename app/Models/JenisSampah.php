@@ -14,4 +14,14 @@ class JenisSampah extends Model
     protected $fillable = ['jenis', 'harga'];
 
     public $timestamps = false;
+
+    public function setoran()
+    {
+        return $this->hasMany(Setoran::class, 'jenis_id', 'id');
+    }
+
+    public function tabungan()
+    {
+        return $this->hasMany(Setoran::class, 'jenis_id', 'id');
+    }
 }

@@ -41,7 +41,81 @@
                               </tr>
                           </tfoot>
                           <tbody>
-
+                              @php
+                                  \Carbon\Carbon::setLocale('id');
+                              @endphp
+                              @foreach ($data as $item)
+                                  @php
+                                      $tanggal = \Carbon\Carbon::parse($item['tgl_setor'])->isoFormat('dddd, D MMMM Y');
+                                      
+                                      if ($item['keterangan'] == 'dijemput') {
+                                          $harga = $item['jenis']['harga'] - $item['jenis']['harga'] * 0.2;
+                                      } else {
+                                          $harga = $item['jenis']['harga'];
+                                      }
+                                  @endphp
+                                  <tr>
+                                      <td>{{ $tanggal }}</td>
+                                      <td>{{ $item['user']['name'] }}</td>
+                                      <td>{{ $item['keterangan'] }}</td>
+                                      <td>{{ $harga }}</td>
+                                      <td>{{ $item['berat'] }}</td>
+                                      <td>{{ $item['debit'] }}</td>
+                                      <td>
+                                          <button class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal"
+                                              data-target="#detail{{ $item['id'] }}">
+                                              <span class="icon text-white-50">
+                                                  <i class="fas fa-info"></i>
+                                              </span>
+                                              <span class="text">Detail</span>
+                                          </button>
+                                          <div class="modal fade" id="detail{{ $item['id'] }}" tabindex="-1" role="dialog"
+                                              aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                                              <div class="modal-dialog">
+                                                  <div class="modal-content">
+                                                      <div class="modal-header">
+                                                          <h5 class="modal-title" id="exampleModalLabel">Detail Setoran</h5>
+                                                          <button type="button" class="close" data-dismiss="modal"
+                                                              aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Hari/Tanggal</label>
+                                                              <p class="col-md-8">: {{ $tanggal }}</p>
+                                                          </div>
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Nama</label>
+                                                              <p class="col-md-8">: {{ $item['user']['name'] }}</p>
+                                                          </div>
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Keterangan</label>
+                                                              <p class="col-md-8">: {{ $item['keterangan'] }}</p>
+                                                          </div>
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Jenis Sampah</label>
+                                                              <p class="col-md-8">: {{ $item['jenis']['jenis'] }}</p>
+                                                          </div>
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Harga</label>
+                                                              <p class="col-md-8">: {{ $harga }}</p>
+                                                          </div>
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Berat</label>
+                                                              <p class="col-md-8">: {{ $item['berat'] }} Kg</p>
+                                                          </div>
+                                                          <div class="row">
+                                                              <label for="" class="col-md-4">Debit</label>
+                                                              <p class="col-md-8">: {{ $item['debit'] }}</p>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              @endforeach
                           </tbody>
                       </table>
                   </div>

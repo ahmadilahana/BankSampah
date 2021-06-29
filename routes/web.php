@@ -89,4 +89,9 @@ Route::group([
 
     //SETORAN
     Route::get('/setoran', 'SetoranController@get_data');
+    //END SETORAN
+    
+    //BUKU TABUNGAN
+    Route::get('/bukutabungan', 'BukuTabunganController@get_data');
+    //BUKU TABUNGAN
 });

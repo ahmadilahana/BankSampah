@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\BukuTabungan;
 use Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -54,5 +56,12 @@ class NasabahController extends Controller
     {
         $user = User::where('role', 'Nasabah')->get();
         return response()->json($user, 200);
+    }
+
+    public function buku_tabungan()
+    {
+        $tabungan = BukuTabungan::where('user_id', Auth::user()->id)->get()->load(['jenis']);
+        
+        return response()->json($tabungan, 200);
     }
 }

@@ -59,4 +59,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Setoran::class, 'user_id', 'id');
     }
 
+    public function tabungan()
+    {
+        return $this->hasMany(Setoran::class, 'user_id', 'id');
+    }
+
 }

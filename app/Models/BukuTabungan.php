@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Carbon\Carbon;
 
-class Setoran extends Model
+class BukuTabungan extends Model
 {
     use HasFactory;
 
-    protected $table = 'setoran';
-    protected $fillable = ['tgl_setor', 'keterangan', 'jenis_id', 'berat', 'debit', 'user_id'];
+    protected $table = 'buku_tabungan';
+    protected $fillable = [
+        'tanggal', 'keterangan', 'jenis_id', 'berat', 'debit', 'kredit', 'saldo', 'user_id',
+    ];
+
     public $timestamps = false;
 
     public function jenis()

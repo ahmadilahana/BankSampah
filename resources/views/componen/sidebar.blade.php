@@ -86,7 +86,7 @@
     <li class="nav-item {{ Request::is('bukutabungan') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="/bukutabungan">
             <i class="fas fa-database"></i>
-            <span>Riwayat Setoran</span>
+            <span>Buku Tabungan</span>
         </a>
     </li>
     <!-- Divider -->
