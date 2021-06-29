@@ -22,6 +22,6 @@ class JenisSampah extends Model
 
     public function tabungan()
     {
-        return $this->hasMany(Setoran::class, 'jenis_id', 'id');
+        return $this->hasMany(BukuTabungan::class, 'jenis_id', 'id');
     }
 }

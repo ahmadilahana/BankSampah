@@ -35,7 +35,7 @@
                               </tr>
                           </tfoot>
                           <tbody>
-
+                              @dump($data);
                           </tbody>
                       </table>
                   </div>
