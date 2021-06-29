@@ -27,7 +27,11 @@ Route::group([
     Route::get('/profile', function () {
         return view('page.profile');
     });
-    
+    Route::get('/profile/edit', function () {
+        return view('form.editprofile');
+    });
+    Route::post('/profile/edit/{id}', "UserController@update_user");
+
     //Nasabah
     Route::get('/user/nasabah', "NasabahController@get_user");
     Route::get('/user/nasabah/add', function () {

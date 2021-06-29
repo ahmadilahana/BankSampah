@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Hash;
 use Session;
-use App\Modesl\User;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -52,5 +52,66 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function update_user(Request $request, $id)
+    {
+        // echo "update";
+        $data = $request->only('nama', 'email', 'no_telp');
+        $user = User::find($id);
+        // var_dump($user);
+        $validator = Validator::make($data, [
+            'nama' => 'required|string',
+            'email' => 'required|email',
+            'no_telp' => 'required|numeric',
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        if ($request['email'] != $user['email'] && $request['no_telp'] != $user['no_telp']) {
+            $validator = Validator::make($data, [
+                'email' => 'unique:users',
+                'no_telp' => 'unique:users',
+            ]);
+
+            $no_telp = $request['no_telp'];
+            $email = $request['email'];
+
+        }elseif ($request['email'] != $user['email']) {
+            $validator = Validator::make($data, [
+                'email' => 'unique:users',
+            ]);
+
+            $email = $request['email'];
+            $no_telp = $user['no_telp'];
+
+        }elseif ($request['no_telp'] != $user['no_telp']) {
+            $validator = Validator::make($data, [
+                'no_telp' => 'unique:users',
+            ]);
+
+            $no_telp = $request['no_telp'];
+            $email = $user['email'];
+
+        }else {
+
+            $no_telp = $user['no_telp'];
+            $email = $user['email'];
+
+        }
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+        $user->update([
+            'name' => $request->nama,
+            'email' => $email,
+            'no_telp' => $no_telp,
+        ]);
+
+        return redirect('/profile')->with("success", "Profile berhasil diubah");
     }
 }
