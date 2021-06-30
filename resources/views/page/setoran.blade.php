@@ -49,7 +49,7 @@
                                       $tanggal = \Carbon\Carbon::parse($item['tgl_setor'])->isoFormat('dddd, D MMMM Y');
                                       
                                       if ($item['keterangan'] == 'dijemput') {
-                                          $harga = $item['jenis']['harga'] - $item['jenis']['harga'] * 0.2;
+                                          $harga = $item['jenis']['harga'] - ($item['jenis']['harga'] * 0.2);
                                       } else {
                                           $harga = $item['jenis']['harga'];
                                       }

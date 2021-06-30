@@ -91,6 +91,7 @@
 
     <script>
             $('#dataTable').DataTable();
+            $('.dataTable2').DataTable();
     </script>
 
 </body>
