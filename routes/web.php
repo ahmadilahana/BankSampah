@@ -21,9 +21,7 @@ Route::group([
     'middleware' => 'auth',
 ], function(){
 
-    Route::get('/', function () {
-        return view('page.home');
-    });
+    Route::get('/', 'HomeController@index');
     Route::get('/profile', function () {
         return view('page.profile');
     });

@@ -58,6 +58,7 @@ Route::group([
 	], function(){
 		Route::get('/jenis_sampah', 'JenisSampahController@get_jenis_sampah');
 		Route::post('/setoran/add', 'SetoranController@add');
+		Route::get('/setoran', 'SetoranController@get_data');
 	});
 
 	

@@ -60,7 +60,7 @@ class NasabahController extends Controller
 
     public function buku_tabungan()
     {
-        $tabungan = BukuTabungan::where('user_id', Auth::user()->id)->get()->load(['jenis']);
+        $tabungan = BukuTabungan::where('user_id', Auth::user()->id)->orderBy('tanggal', 'DESC')->get()->load(['jenis']);
         
         return response()->json($tabungan, 200);
     }
