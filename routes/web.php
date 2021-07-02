@@ -12,11 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/v', function(){
+    return view('customauth.verify');
+});
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 Route::post('/login', 'UserController@login');
 Route::get('/logout', 'UserController@logout');
+Route::get('/forgot_password', function(){
+    return view('auth.forgotpassword');
+});
+Route::post('/forgot_password', 'ForgotPasswordController@postEmail');
 Route::group([
     'middleware' => 'auth',
 ], function(){
@@ -28,6 +35,12 @@ Route::group([
     Route::get('/profile/edit', function () {
         return view('form.editprofile');
     });
+    
+    Route::get('/profile/reset_password', function () {
+        return view('form.editpassword');
+    });
+    Route::post('/profile/reset_password', "UserController@reset_password");
+    
     Route::post('/profile/edit/{id}', "UserController@update_user");
 
     //Nasabah
@@ -89,7 +102,16 @@ Route::group([
     Route::get('/setoran', 'SetoranController@get_data');
     //END SETORAN
     
+    //PENJUALAN
+    Route::get('/penjualan', 'PenjualanController@get_data');
+    //END PENJUALAN
+
     //BUKU TABUNGAN
     Route::get('/bukutabungan', 'BukuTabunganController@get_data');
     //BUKU TABUNGAN
+
+    //PENARIKAN UANG
+    Route::get('/penarikan', 'PenarikanController@form_penarikan');
+    Route::post('/penarikan', 'PenarikanController@store_penarikan');
+    //END PENARIKAN UANG
 });

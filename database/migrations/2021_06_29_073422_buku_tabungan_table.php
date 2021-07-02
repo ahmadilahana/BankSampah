@@ -16,7 +16,7 @@ class BukuTabunganTable extends Migration
         Schema::create('buku_tabungan', function (Blueprint $table) {
             $table->id();
             $table->timestamp('tanggal');
-            $table->enum('keterangan', ['dijemput', 'diantar'])->nullable();
+            $table->enum('keterangan', ['Setoran', 'Penarikan'])->nullable();
             $table->unsignedBigInteger('jenis_id')->nullable();
             $table->float('berat')->nullable();
             $table->float('debit')->nullable();

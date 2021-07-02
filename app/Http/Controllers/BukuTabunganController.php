@@ -10,8 +10,10 @@ class BukuTabunganController extends Controller
 {
     public function get_data()
     {
-        $data = BukuTabungan::select(DB::raw('max(buku_tabungan.saldo) as total_saldo, sum(berat) as total_berat'), 'user_id')->groupBy('user_id')->get()->load('user');
+        $tanggal = BukuTabungan::selectRaw('max(tanggal) as max_tgl')->groupBy('user_id');
+        $data = BukuTabungan::select('buku_tabungan.user_id', 'buku_tabungan.saldo')->whereIn('tanggal', $tanggal)->get();
+        $berat = BukuTabungan::selectRaw('sum(berat) as total_berat')->groupBy('user_id')->get();
         $buku = BukuTabungan::orderBy('tanggal', 'DESC')->get()->load('jenis');
-        return View('page.bukutabungan', ['data'=>$data, 'buku'=>$buku]);
+        return View('page.bukutabungan', ['data'=>$data, 'buku'=>$buku, 'berat'=>$berat]);
     }
 }

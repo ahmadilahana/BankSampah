@@ -114,4 +114,32 @@ class UserController extends Controller
 
         return redirect('/profile')->with("success", "Profile berhasil diubah");
     }
+
+    public function reset_password(Request $request)
+    {
+        $data = $request->only('new_password', 'c_password', 'old_password');
+        $user = Auth::user();
+        $validator = Validator::make($data, [
+            'new_password' => 'required|string',
+            'c_password' => 'required|string|same:new_password',
+            'old_password' => 'required|string',
+        ],[
+            'c_password.required' => 'The confirmation password field is required.',
+            'c_password.same' => 'The confirmation password invalid.'
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        if (! Hash::check($request['old_password'], $user['password'])) {
+            return redirect()->back()->withErrors(['old_password'=>'Old Password Invalid'])->withInput($request->all());
+        }else {
+            User::find($user->id)->update([
+                'password' => Hash::make($request['new_password']),
+            ]);
+            return redirect()->back()->with(['success'=>'Password Berhasil diubah']);
+        }
+    }
 }

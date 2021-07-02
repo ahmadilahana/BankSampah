@@ -54,7 +54,7 @@ class SetoranController extends Controller
 
         BukuTabungan::create([
             'tanggal' => now(),
-            'keterangan' => $request->keterangan,
+            'keterangan' => "Setoran",
             'jenis_id' => $request->jenis_id,
             'berat' => $request->berat,
             'debit' => $debit,

@@ -26,12 +26,14 @@
           <div class="card shadow mb-4">
               <div class="d-flex card-header py-3">
                   <h6 class="flex-grow-1 font-weight-bold text-primary">Data Table</h6>
-                  <a href="/jenis_sampah/add" class="btn btn-primary btn-icon-split btn-sm">
-                      <span class="icon text-white-50">
-                          <i class="fas fa-plus"></i>
-                      </span>
-                      <span class="text">Tambah Data</span>
-                  </a>
+                  @if (Auth::user()->role == 'Admin')
+                      <a href="/jenis_sampah/add" class="btn btn-primary btn-icon-split btn-sm">
+                          <span class="icon text-white-50">
+                              <i class="fas fa-plus"></i>
+                          </span>
+                          <span class="text">Tambah Data</span>
+                      </a>
+                  @endif
               </div>
               <div class="card-body">
                   <div class="table-responsive">
@@ -40,14 +42,18 @@
                               <tr>
                                   <th>Jenis</th>
                                   <th>Harga</th>
-                                  <th>Action</th>
+                                  @if (Auth::user()->role == 'Admin')
+                                      <th>Action</th>
+                                  @endif
                               </tr>
                           </thead>
                           <tfoot>
                               <tr>
                                   <th>Jenis</th>
-                                  <th>Harga</th>
-                                  <th>Action</th>
+                                  <th>Harga (/Kg)</th>
+                                  @if (Auth::user()->role == 'Admin')
+                                      <th>Action</th>
+                                  @endif
                               </tr>
                           </tfoot>
                           <tbody>
@@ -56,22 +62,24 @@
                                   <tr>
                                       <td>{{ $item['jenis'] }}</td>
                                       <td>{{ $item['harga'] }}</td>
-                                      <td>
-                                          <a href="/jenis_sampah/edit/{{ $item['id'] }}"
-                                              class="btn btn-primary btn-icon-split btn-sm">
-                                              <span class="icon text-white-50">
-                                                  <i class="fas fa-edit"></i>
-                                              </span>
-                                              <span class="text">Edit</span>
-                                          </a>
-                                          <a href="/jenis_sampah/delete/{{ $item['id'] }}"
-                                              class="btn btn-danger btn-icon-split btn-sm">
-                                              <span class="icon text-white-50">
-                                                  <i class="far fa-trash-alt"></i>
-                                              </span>
-                                              <span class="text">Hapus</span>
-                                          </a>
-                                      </td>
+                                      @if (Auth::user()->role == 'Admin')
+                                          <td>
+                                              <a href="/jenis_sampah/edit/{{ $item['id'] }}"
+                                                  class="btn btn-primary btn-icon-split btn-sm">
+                                                  <span class="icon text-white-50">
+                                                      <i class="fas fa-edit"></i>
+                                                  </span>
+                                                  <span class="text">Edit</span>
+                                              </a>
+                                              <a href="/jenis_sampah/delete/{{ $item['id'] }}"
+                                                  class="btn btn-danger btn-icon-split btn-sm">
+                                                  <span class="icon text-white-50">
+                                                      <i class="far fa-trash-alt"></i>
+                                                  </span>
+                                                  <span class="text">Hapus</span>
+                                              </a>
+                                          </td>
+                                      @endif
                                   </tr>
 
                               @endforeach

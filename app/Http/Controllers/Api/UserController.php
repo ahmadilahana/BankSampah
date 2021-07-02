@@ -81,6 +81,7 @@ class UserController extends Controller
     {
         $data = $request->only('name', 'email', 'no_telp');
         $user = Auth::user();
+        // dd($user);
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email',

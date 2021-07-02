@@ -64,4 +64,5 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(BukuTabungan::class, 'user_id', 'id');
     }
 
+
 }

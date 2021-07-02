@@ -14,6 +14,12 @@
           <div class="card shadow mb-4">
               <div class="d-flex card-header py-3">
                   <h6 class="flex-grow-1 font-weight-bold text-primary">Data Table</h6>
+                  <a href="/penarikan" class="btn btn-primary btn-icon-split btn-sm">
+                      <span class="icon text-white-50">
+                          <i class="far fa-money-bill-alt"></i>
+                      </span>
+                      <span class="text">Penarikan</span>
+                  </a>
               </div>
               <div class="card-body">
                   <div class="table-responsive">
@@ -35,12 +41,12 @@
                               </tr>
                           </tfoot>
                           <tbody>
-                              @foreach ($data as $item)
+                              @foreach ($data as $key => $item)
 
                                   <tr>
                                       <td>{{ $item['user']['name'] }}</td>
-                                      <td>{{ $item['total_berat'] }} Kg</td>
-                                      <td>{{ $item['total_saldo'] }}</td>
+                                      <td>{{ $berat[$key]['total_berat'] }} Kg</td>
+                                      <td>{{ $item['saldo'] }}</td>
                                       <td>
                                           <button class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal"
                                               data-target="#detail{{ $item['user_id'] }}">
@@ -68,7 +74,6 @@
                                                                       <th>Tanggal</th>
                                                                       <th>Keterangan</th>
                                                                       <th>Jenis</th>
-                                                                      <th>Harga Satuan</th>
                                                                       <th>Berat</th>
                                                                       <th>Debit</th>
                                                                       <th>Kredit</th>
@@ -80,7 +85,6 @@
                                                                       <th>Tanggal</th>
                                                                       <th>Keterangan</th>
                                                                       <th>Jenis</th>
-                                                                      <th>Harga Satuan</th>
                                                                       <th>Berat</th>
                                                                       <th>Debit</th>
                                                                       <th>Kredit</th>
@@ -95,17 +99,12 @@
                                                                       @if ($hal['user_id'] == $item['user_id'])
                                                                           @php
                                                                               $tanggal = \Carbon\Carbon::parse($hal['tanggal'])->isoFormat('dddd, D MMMM Y');
-                                                                              if ($hal['keterangan'] == 'dijemput') {
-                                                                                  $harga = $hal['jenis']['harga'] - $hal['jenis']['harga'] * 0.2;
-                                                                              } else {
-                                                                                  $harga = $hal['jenis']['harga'];
-                                                                              }
+                                                                              
                                                                           @endphp
                                                                           <tr>
                                                                               <td>{{ $tanggal }}</td>
                                                                               <td>{{ $hal['keterangan'] }}</td>
-                                                                              <td>{{ $hal['jenis']['jenis'] }}</td>
-                                                                              <td>{{ $harga }}</td>
+                                                                              <td>{{ isset($hal['jenis']['jenis'])? $hal['jenis']['jenis'] : '' }}</td>
                                                                               <td>{{ $hal['berat'] }}</td>
                                                                               <td>{{ $hal['debit'] }}</td>
                                                                               <td>{{ $hal['kredit'] }}</td>

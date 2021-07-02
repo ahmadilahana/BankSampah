@@ -66,7 +66,6 @@
     <div class="sidebar-heading">
         Data
     </div>
-    @if (Auth::user()->role == 'Admin')
 
         <li class="nav-item {{ Request::is('jenis_sampah') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="/jenis_sampah">
@@ -74,7 +73,6 @@
                 <span>Jenis Sampah</span>
             </a>
         </li>
-    @endif
 
     <li class="nav-item {{ Request::is('setoran') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="/setoran">
@@ -87,6 +85,13 @@
         <a class="nav-link collapsed" href="/bukutabungan">
             <i class="fas fa-database"></i>
             <span>Buku Tabungan</span>
+        </a>
+    </li>
+    
+    <li class="nav-item {{ Request::is('penjualan') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="/penjualan">
+            <i class="fas fa-database"></i>
+            <span>Riwayat Penjualan</span>
         </a>
     </li>
     <!-- Divider -->

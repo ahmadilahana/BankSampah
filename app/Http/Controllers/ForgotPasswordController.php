@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use Carbon\Carbon;
@@ -19,7 +18,7 @@ class ForgotPasswordController extends Controller
             'email' => 'required|email|exists:users',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
         
         $token = Str::random(64);
@@ -33,6 +32,6 @@ class ForgotPasswordController extends Controller
           $message->subject('Reset Password Notification');
       });
 
-      return response()->json('message', 'We have e-mailed your password reset link!',200);
+      return redirect()->back()->with('We have e-mailed your password reset link!');
     }
 }

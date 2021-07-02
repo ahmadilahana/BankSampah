@@ -24,4 +24,9 @@ class JenisSampah extends Model
     {
         return $this->hasMany(BukuTabungan::class, 'jenis_id', 'id');
     }
+
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class, 'jenis_id', 'id');
+    }
 }
