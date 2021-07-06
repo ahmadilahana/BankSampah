@@ -73,4 +73,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Message::class, 'to', 'id');
     }
+
+    public function foto()
+    {
+        return $this->hasOne(FotoProfile::class, 'user_id', 'id');
+    }
 }

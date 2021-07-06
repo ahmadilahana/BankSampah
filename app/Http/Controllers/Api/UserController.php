@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\FotoProfile;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use JWTAuth;
@@ -56,7 +57,8 @@ class UserController extends Controller
     {
         try {
             // dd(JWTAuth::parseToken());
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
+            $user = JWTAuth::parseToken()->authenticate();
+            if (! $user) {
                 return response()->json(['user_not_found'], 404);
             }
 
@@ -73,10 +75,9 @@ class UserController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-
+        $user->load('foto');
         return response()->json(compact('user'));
     }
-
     public function edit_user(Request $request)
     {
         $data = $request->only('name', 'email', 'no_telp');
@@ -134,6 +135,15 @@ class UserController extends Controller
             'email' => $email,
             'no_telp' => $no_telp,
         ]);
+
+        $foto = $request->only('foto');
+        if(! FotoProfile::where('user_id', $user->id)->exists()){
+            // echo "store";
+            return $this->store($foto, $user->id);
+        }else {
+            // echo "update";
+            return $this->update($foto, $user->id);
+        }
 
         return response()->json('update data success', 200);
     }
@@ -254,5 +264,43 @@ class UserController extends Controller
         ]);
 
         return response()->json('update data success', 200);
+    }
+
+    public function store(Request $request, $id)
+    {
+        if ($request->hasFile('foto')) {
+            $result = $request->file('foto')->storeOnCloudinary('banksampah/profile');
+            $foto_id = $result->getPublicId();
+            $foto = $result->getSecurePath();
+            
+            $profile = FotoProfile::create([
+                'id' => $foto_id,
+                'foto' => $foto,
+                'user_id' => $id,
+            ]);
+
+            return $profile;
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        
+        if ($request->hasFile('foto')) {
+            // echo "apa";
+            $result = $request->file('foto')->storeOnCloudinary('banksampah/profile');
+            $foto_id = $result->getPublicId();
+            $foto = $result->getSecurePath();
+            $id = FotoProfile::where('user_id', '=', $id)->first()->id;
+            // echo "ada gambar";
+            // $profile_id = Profile::where('akun_id', '=', $id)->first()->profile_id;
+            Cloudinary::destroy($id);
+            $profile = tap(FotoProfile::where('id', '=', $id))->update([
+                'id' => $foto_id,
+                'foto' => $foto,
+            ])->first();
+        
+            return $profile;
+        }
     }
 }
