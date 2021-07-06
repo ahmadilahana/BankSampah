@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/v', function(){
-    return view('customauth.verify');
-});
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
@@ -23,6 +20,8 @@ Route::get('/logout', 'UserController@logout');
 Route::get('/forgot_password', function(){
     return view('auth.forgotpassword');
 });
+Route::get('/{token}/reset_password', 'ForgotPasswordController@getEmail');
+Route::post('/reset_password', 'ForgotPasswordController@resetPassword');
 Route::post('/forgot_password', 'ForgotPasswordController@postEmail');
 Route::group([
     'middleware' => 'auth',

@@ -102,9 +102,9 @@
             <div class="card">
                 <h3>Reset Password</h3>
                 <p>untuk melakukan reset password silahkan klik link dibawah</p>
-                <a href="{{ url('/v') }}">{{ url('/v') }}</a>
+                <p><a href="{{ url('/'.$token.'/reset_password') }}">{{ url('/'.$token.'/reset_password') }}</a></p>
                 <p>atau</p>
-                <a href="" style="text-decoration: none; color:white;">
+                <a href={{url('/'.$token.'/reset_password')}} style="text-decoration: none; color:white;">
                     <button class="button" style="vertical-align:middle"><span>Click Here </span>
                 </a>
             </div>
