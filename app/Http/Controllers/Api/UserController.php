@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Hash;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
@@ -280,7 +281,7 @@ class UserController extends Controller
                 'user_id' => $id,
             ]);
 
-            return $profile;
+            // return $profile;
         }
     }
 
@@ -300,7 +301,7 @@ class UserController extends Controller
                 'foto' => $foto,
             ])->first();
         
-            return $profile;
+            // return $profile;
         }
     }
 }
