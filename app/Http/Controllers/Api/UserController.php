@@ -266,10 +266,11 @@ class UserController extends Controller
         return response()->json('update data success', 200);
     }
 
-    public function store(Request $request, $id)
+    public function store($foto, $id)
     {
-        if ($request->hasFile('foto')) {
-            $result = $request->file('foto')->storeOnCloudinary('banksampah/profile');
+        // dd($foto['foto']);
+        if (isset($foto)) {
+            $result = $foto['foto']->storeOnCloudinary('banksampah/profile');
             $foto_id = $result->getPublicId();
             $foto = $result->getSecurePath();
             
@@ -283,12 +284,11 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($foto, $id)
     {
         
-        if ($request->hasFile('foto')) {
-            // echo "apa";
-            $result = $request->file('foto')->storeOnCloudinary('banksampah/profile');
+        if (isset($foto)) {
+            $result = $foto['foto']->storeOnCloudinary('banksampah/profile');
             $foto_id = $result->getPublicId();
             $foto = $result->getSecurePath();
             $id = FotoProfile::where('user_id', '=', $id)->first()->id;
