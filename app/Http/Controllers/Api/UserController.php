@@ -140,10 +140,10 @@ class UserController extends Controller
         $foto = $request->only('foto');
         if(! FotoProfile::where('user_id', $user->id)->exists()){
             // echo "store";
-            return $this->store($foto, $user->id);
+            $this->store($foto, $user->id);
         }else {
             // echo "update";
-            return $this->update($foto, $user->id);
+            $this->update($foto, $user->id);
         }
 
         return response()->json('update data success', 200);
