@@ -81,9 +81,9 @@ class MessageController extends Controller
     public function index()
     {
         $my_id = Auth::id();
-        $from = User::select('users.id', 'users.name', 'ft_profile.foto')->where('users.id', '!=', $my_id)->leftJoin('ft_profile', 'users.id', '=', 'ft_profile.user_id')->join('messages', 'messages.to', '=', 'users.id')->where('messages.from', '=', $my_id)->get()->toArray();
+        $from = User::select('users.id', 'users.name', 'ft_profile.foto', 'messages.is_read', 'messages.message')->where('users.id', '!=', $my_id)->leftJoin('ft_profile', 'users.id', '=', 'ft_profile.user_id')->join('messages', 'messages.to', '=', 'users.id')->where('messages.from', '=', $my_id)->get()->toArray();
 
-        $to = User::select('users.id', 'users.name', 'ft_profile.foto')->where('users.id', '!=', $my_id)->leftJoin('ft_profile', 'users.id', '=', 'ft_profile.user_id')->join('messages', 'messages.from', '=', 'users.id')->where('messages.to', '=', $my_id)->get()->toArray();
+        $to = User::select('users.id', 'users.name', 'ft_profile.foto', 'messages.is_read', 'messages.message')->where('users.id', '!=', $my_id)->leftJoin('ft_profile', 'users.id', '=', 'ft_profile.user_id')->join('messages', 'messages.from', '=', 'users.id')->where('messages.to', '=', $my_id)->get()->toArray();
 
         $data = array_unique(array_merge($from, $to), SORT_REGULAR);
         $message = array_values($data);
