@@ -13,7 +13,7 @@
         <div class="card shadow mb-4">
             <div class="card-body row">
                 <div class="col-md-4">
-                    <img src="{{asset('img/undraw_profile.svg')}}" class="rounded-circle">
+                    <img src="{{ (empty($foto = Auth::user()->load('foto')->foto->foto) ? asset('img/undraw_profile.svg') : $foto )}}" width="300" height="300" class="rounded-circle">
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">

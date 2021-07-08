@@ -8,6 +8,8 @@ use Validator;
 use Hash;
 use Session;
 use App\Models\User;
+use App\Models\FotoProfile;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
@@ -112,6 +114,16 @@ class UserController extends Controller
             'no_telp' => $no_telp,
         ]);
 
+        // dd($request->foto);
+        $foto = $request->only('foto');
+        if(! FotoProfile::where('user_id', $user->id)->exists()){
+            // echo "store";
+            $this->store($foto, $user->id);
+        }else {
+            // echo "update";
+            $this->update($foto, $user->id);
+        }
+
         return redirect('/profile')->with("success", "Profile berhasil diubah");
     }
 
@@ -140,6 +152,44 @@ class UserController extends Controller
                 'password' => Hash::make($request['new_password']),
             ]);
             return redirect()->back()->with(['success'=>'Password Berhasil diubah']);
+        }
+    }
+
+    public function store($foto, $id)
+    {
+        // dd($foto['foto']);
+        if (isset($foto)) {
+            $result = $foto['foto']->storeOnCloudinary('banksampah/profile');
+            $foto_id = $result->getPublicId();
+            $foto = $result->getSecurePath();
+            
+            $profile = FotoProfile::create([
+                'id' => $foto_id,
+                'foto' => $foto,
+                'user_id' => $id,
+            ]);
+
+            // return $profile;
+        }
+    }
+
+    public function update($foto, $id)
+    {
+        
+        if (isset($foto)) {
+            $result = $foto['foto']->storeOnCloudinary('banksampah/profile');
+            $foto_id = $result->getPublicId();
+            $foto = $result->getSecurePath();
+            $id = FotoProfile::where('user_id', '=', $id)->first()->id;
+            // echo "ada gambar";
+            // $profile_id = Profile::where('akun_id', '=', $id)->first()->profile_id;
+            Cloudinary::destroy($id);
+            $profile = tap(FotoProfile::where('id', '=', $id))->update([
+                'id' => $foto_id,
+                'foto' => $foto,
+            ])->first();
+        
+            // return $profile;
         }
     }
 }

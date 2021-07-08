@@ -51,14 +51,15 @@ Route::group([
 
 	],function(){
 		Route::get('/bukutabungan', 'NasabahController@buku_tabungan');
+		Route::get('/message/kontak/pengurus', 'MessageController@getPengurus');
 	});
-
-
+	
 	Route::group([
 		'middleware' => ['jwt.verify', 'role:Pengurus1'],
 	], function(){
 		Route::post('/setoran/add', 'SetoranController@add');
 		Route::get('/setoran', 'SetoranController@get_data');
+		Route::get('/message/kontak/nasabah', 'MessageController@getNasabah');
 	});
 
 	Route::group([
@@ -66,5 +67,13 @@ Route::group([
 	], function(){
 		Route::post('/penjualan/add', 'PenjualanController@add');
 		Route::get('/penjualan', 'PenjualanController@get_data');
+	});
+	
+	Route::group([
+		'middleware' => ['jwt.verify', 'role:Pengurus1,Nasabah'],
+	],function(){
+		Route::get('/message', 'MessageController@index');
+		Route::post('/message/new/{id}', 'MessageController@sendMessage');
+		Route::get('/message/{id}', 'MessageController@getMessage');
 	});
 });

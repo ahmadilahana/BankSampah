@@ -91,8 +91,18 @@
     <script src="{{ asset('/js/demo/chart-pie-demo.js') }}"></script>
     <script src="{{ asset('/js/bootstrap-select.min.js') }}"></script>
 
-    <script>
+    <script type='text/javascript'>
         $('#dataTable').DataTable();
+        function preview_image(event) 
+        {
+            var reader = new FileReader();
+            reader.onload = function()
+            {
+            var output = document.getElementById('preview_img');
+            output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
     </script>
 
 </body>

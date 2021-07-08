@@ -20,39 +20,42 @@
                     <span class="text">Kembali</span>
                 </a>
             </div>
-            <div class="card-body row">
-                <div class="col-md-4">
-                    <img src="{{ asset('img/undraw_profile.svg')}}" class="rounded-circle">
-                </div>
-                <form method="POST" class="col-md-8" action="/profile/edit/{{ Auth::user()->id}}">
+            <div class="card-body">
+                <form method="POST" class="row" action="/profile/edit/{{ Auth::user()->id}}" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
-                        <label for="namalengkap">Nama Lengkap</label>
-                        <input type="text" class="form-control" name="nama" id="namalengkap" aria-describedby="emailHelp"
+                    <div class="col-md-4">
+                        <img src="{{ (empty($foto = Auth::user()->load('foto')->foto->foto) ? asset('img/undraw_profile.svg') : $foto )}}" class="rounded-circle" width="300" height="300" id="preview_img">
+                        <input type="file" class="form-control mt-2" name="foto" id="formFile" onchange="preview_image(event)" value="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="namalengkap">Nama Lengkap</label>
+                            <input type="text" class="form-control" name="nama" id="namalengkap" aria-describedby="emailHelp"
                             placeholder="Nama Lengkap" value="{{ ($errors->has('nama')) ? old('nama') : Auth::user()->name}}">
                             @if ($errors->has('nama'))
-                                <small id="emailHelp" class="form-text text-danger">{{ $errors->first('nama') }}</small>
+                            <small id="emailHelp" class="form-text text-danger">{{ $errors->first('nama') }}</small>
                             @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" name="email" id="exampleInputEmail1"
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" name="email" id="exampleInputEmail1"
                             aria-describedby="emailHelp" placeholder="Enter email" value="{{ ($errors->has('email')) ? old('email') : Auth::user()->email}}">
                             @if ($errors->has('email'))
-                                <small id="emailHelp" class="form-text text-danger">{{ $errors->first('email') }}</small>
+                            <small id="emailHelp" class="form-text text-danger">{{ $errors->first('email') }}</small>
                             @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="notelepon">Nomor Telepon</label>
-                        <input type="text" class="form-control" id="notelepon" name="no_telp" aria-describedby="emailHelp"
+                        </div>
+                        <div class="form-group">
+                            <label for="notelepon">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="notelepon" name="no_telp" aria-describedby="emailHelp"
                             placeholder="Nomor Telepon" value="{{ ($errors->has('no_telp')) ? old('no_telp') : Auth::user()->no_telp}}">
                             @if ($errors->has('no_telp'))
-                                <small id="emailHelp" class="form-text text-danger">{{ $errors->first('no_telp') }}</small>
+                            <small id="emailHelp" class="form-text text-danger">{{ $errors->first('no_telp') }}</small>
                             @endif
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </div>
+                </div>
         </div>
     </div>
 @endsection
