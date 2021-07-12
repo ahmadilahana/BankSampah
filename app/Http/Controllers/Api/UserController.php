@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Lokasi;
 use App\Models\FotoProfile;
 use Validator;
 use Illuminate\Support\Facades\Auth;
@@ -81,13 +82,19 @@ class UserController extends Controller
     }
     public function edit_user(Request $request)
     {
-        $data = $request->only('name', 'email', 'no_telp');
+        $data = $request->only('name', 'email', 'no_telp', 'jalan', 'kecamatan', 'kota', 'provinsi', 'lng', 'lat');
         $user = Auth::user();
         // dd($user);
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email',
             'no_telp' => 'required|numeric',
+            'jalan' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kota' => 'required|string',
+            'provinsi' => 'required|string',
+            'lng' => 'required|numeric',
+            'lat' => 'required|numeric',
         ]);
 
         //Send failed response if request is not valid
@@ -146,6 +153,14 @@ class UserController extends Controller
             $this->update($foto, $user->id);
         }
 
+        $alamat = $request->only('jalan', 'kecamatan', 'kota', 'provinsi', 'lng', 'lat');
+        if(! Lokasi::where('user_id', $user->id)->exists()){
+            // echo "store";
+            $this->storeAlamat($alamat, $user->id);
+        }else {
+            // echo "update";
+            $this->updateAlamat($alamat, $user->id);
+        }
         return response()->json('update data success', 200);
     }
 
@@ -299,6 +314,41 @@ class UserController extends Controller
             $profile = tap(FotoProfile::where('id', '=', $id))->update([
                 'id' => $foto_id,
                 'foto' => $foto,
+            ])->first();
+        
+            // return $profile;
+        }
+    }
+    
+    public function storeAlamat($alamat, $id)
+    {
+        // dd($foto['foto']);
+        if (isset($alamat)) {
+            $alamat = Lokasi::create([
+                'jalan' => $alamat->jalan,
+                'kecamatan' => $alamat->kecamatan,
+                'kota' => $alamat->kota,
+                'provinsi' => $alamat->provinsi,
+                'lng' => $alamat->lng,
+                'lat' => $alamat->lat,
+                'user_id' => $id,
+            ]);
+
+            // return $profile;
+        }
+    }
+
+    public function updateAlamat($alamat, $id)
+    {
+        
+        if (isset($alamat)) {
+            $profile = tap(Lokasi::where('user_id', '=', $id))->update([
+                'jalan' => $alamat->jalan,
+                'kecamatan' => $alamat->kecamatan,
+                'kota' => $alamat->kota,
+                'provinsi' => $alamat->provinsi,
+                'lng' => $alamat->lng,
+                'lat' => $alamat->lat,
             ])->first();
         
             // return $profile;

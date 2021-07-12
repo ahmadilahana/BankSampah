@@ -21,7 +21,6 @@ class UserTable extends Migration
             $table->string('no_telp');
             $table->string('password');
             $table->enum('role', ['Admin', 'Bendahara', 'Nasabah', 'Pengurus1', 'Pengurus2', ]);
-            $table->string('lokasi')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
