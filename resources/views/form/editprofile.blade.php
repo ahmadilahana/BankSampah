@@ -24,7 +24,7 @@
                 <form method="POST" class="row" action="/profile/edit/{{ Auth::user()->id}}" enctype="multipart/form-data">
                     @csrf
                     <div class="col-md-4">
-                        <img src="{{ (empty(Auth::user()->load('foto')->foto->foto) ? asset('img/undraw_profile.svg') : Auth::user()->load('foto')->foto->foto)}}" class="rounded-circle" width="300" height="300" id="preview_img">
+                        <img src="{{ }}" class="rounded-circle" width="300" height="300" id="preview_img">
                         <input type="file" class="form-control mt-2" name="foto" id="formFile" onchange="preview_image(event)" value="">
                     </div>
                     <div class="col-md-8">
